@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DemoExam.ADOApp;
 using System.Windows;
 
 namespace DemoExam
@@ -13,5 +8,9 @@ namespace DemoExam
     /// </summary>
     public partial class App : Application
     {
+        private static readonly SessionOneEntities _connection = new SessionOneEntities();
+        public static SessionOneEntities Connection => _connection;
+        public static bool IsAdministratorMode { get; set; } = true;
+        public static Visibility AdminVisibility => IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
     }
 }

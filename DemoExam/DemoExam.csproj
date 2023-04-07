@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>school_logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -64,7 +67,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="PagesApp\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesApp\ServicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsApp\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -92,6 +103,7 @@
     <Compile Include="ADOApp\DocumentByService.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ADOApp\Extensions\Service.cs" />
     <Compile Include="ADOApp\Gender.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -120,7 +132,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="PagesApp\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesApp\ServicePage.xaml.cs">
+      <DependentUpon>ServicePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsApp\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -170,6 +188,24 @@
       <DependentUpon>DbModel.edmx</DependentUpon>
       <LastGenOutput>DbModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Услуги школы\for company.jpg" />
+    <Resource Include="Услуги школы\online lessons.jpg" />
+    <Resource Include="Услуги школы\Английский язык.jpg" />
+    <Resource Include="Услуги школы\Испанский язык.jpg" />
+    <Resource Include="Услуги школы\Итальянский язык.jpg" />
+    <Resource Include="Услуги школы\киноклуб.jpg" />
+    <Resource Include="Услуги школы\Китайский язык.jpg" />
+    <Resource Include="Услуги школы\Немецкий язык.png" />
+    <Resource Include="Услуги школы\Подготовка к экзамену ACT.png" />
+    <Resource Include="Услуги школы\Подготовка к экзамену GMAT.png" />
+    <Resource Include="Услуги школы\Подготовка к экзамену GRE.jpeg" />
+    <Resource Include="Услуги школы\Подготовка к экзамену IELTS.jpg" />
+    <Resource Include="Услуги школы\Подготовка к экзамену SAT.png" />
+    <Resource Include="Услуги школы\Подготовка к экзамену TOEFL.jpg" />
+    <Resource Include="Услуги школы\Португальский язык.jpg" />
+    <Resource Include="Услуги школы\Французский язык.jpg" />
+    <Resource Include="Услуги школы\Японский язык.jpg" />
+    <Resource Include="school_logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
