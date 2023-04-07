@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 
 namespace DemoExam.ADOApp
 {
@@ -10,5 +11,6 @@ namespace DemoExam.ADOApp
         public string DiscountDisplay => Discount == null || Discount == 0 ? "" : $"* скидка {Discount}%";
         public string ImagePath => $@"/{MainImagePath}";
         public Visibility AdminVisibility => App.IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
+        public Brush ServiceBackgroundColor => Discount > 0 ? Brushes.LightGreen : Brushes.White;
     }
 }

@@ -4,39 +4,66 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DemoExam.PagesApp"
-      xmlns:app="clr-namespace:DemoExam"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ServicePage">
-    <Grid Background="Black">
-        <ListView x:Name="lvServices" d:ItemsSource="{d:SampleData ItemCount=5}">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" Margin="0 0 5 0">
+                <TextBlock Text="Сортировка" VerticalAlignment="Center"/>
+                <ComboBox x:Name="cbSorting" Width="200" Height="40" SelectionChanged="cbSorting_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5 0 0 0">
+                <TextBlock Text="Поиск" VerticalAlignment="Center"/>
+                <TextBox x:Name="tbSearchBar" Width="200" VerticalContentAlignment="Center" Height="40" TextChanged="tbSearchBar_TextChanged"/>
+            </StackPanel>
+        </StackPanel>
+        <ListView x:Name="lvServices" Grid.Row="1" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" d:ItemsSource="{d:SampleData ItemCount=5}" Width="800">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Margin" Value="3"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Background="{Binding Path= ServiceBackgroundColor}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding Path=ImagePath}" Width="200" Height="200" Margin="0 0 10 8"/>
-                        <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Top">
-                                <TextBlock Text="{Binding Path=Title}"></TextBlock>
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Margin="0 0 5 0" TextDecorations="Strikethrough" Text="{Binding Path=Cost}" Visibility="{Binding Path=IsHaveDiscount}"></TextBlock>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0:F0} рублей за {1}">
-                                                    <Binding Path="CostWithDiscount" />
-                                                    <Binding Path="DurationInMinutes" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </StackPanel>
-
-                                    <TextBlock Text="{Binding Path=DiscountDisplay}"></TextBlock>
+                        <Image Grid.Column="0" Grid.Row="1" Source="{Binding Path=ImagePath}" Width="200" Height="200" Margin="0 0 10 8"/>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+                            <TextBlock Text="{Binding Path=Title}"></TextBlock>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="0 0 5 0" TextDecorations="Strikethrough" Text="{Binding Path=Cost}" Visibility="{Binding Path=IsHaveDiscount}"></TextBlock>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0:F0} рублей за {1}">
+                                                <Binding Path="CostWithDiscount" />
+                                                <Binding Path="DurationInMinutes" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
                                 </StackPanel>
+
+                                <TextBlock Text="{Binding Path=DiscountDisplay}"></TextBlock>
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Bottom" Margin="0 0 0 8">
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="0 0 0 8">
                             <Button Visibility="{Binding AdminVisibility}" Content="Редактировать" Margin="0 0 5 0"/>
                             <Button Visibility="{Binding AdminVisibility}" Content="Удалить" Margin="5 0 0 0"/>
                         </StackPanel>
@@ -44,5 +71,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0">
+            <TextBlock x:Name="tbRecordsCount"/>
+        </StackPanel>
     </Grid>
 </Page>
