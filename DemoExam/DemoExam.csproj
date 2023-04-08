@@ -132,6 +132,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Components\FilterMethods.cs" />
     <Compile Include="Components\SortingMethods.cs" />
     <Compile Include="PagesApp\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -189,6 +190,7 @@
       <DependentUpon>DbModel.edmx</DependentUpon>
       <LastGenOutput>DbModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="school_logo.png" />
     <Resource Include="Услуги школы\for company.jpg" />
     <Resource Include="Услуги школы\online lessons.jpg" />
     <Resource Include="Услуги школы\Английский язык.jpg" />

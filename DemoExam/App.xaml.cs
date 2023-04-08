@@ -10,7 +10,7 @@ namespace DemoExam
     {
         private static readonly SessionOneEntities _connection = new SessionOneEntities();
         public static SessionOneEntities Connection => _connection;
-        public static bool IsAdministratorMode { get; set; } = true;
+        public static bool IsAdministratorMode { get; set; } = false;
         public static Visibility AdminVisibility => IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
     }
 }

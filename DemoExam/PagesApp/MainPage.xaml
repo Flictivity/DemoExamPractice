@@ -16,9 +16,13 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Frame x:Name="pageMainFrame" Grid.Row="1" Grid.Column="1"></Frame>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+            <Image Source="/school_logo.png" Width="50" Height="50"/>
+            <Label Content="Языковая школа" VerticalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Page>
