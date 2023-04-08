@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoExam.WindowsApp"
         mc:Ignorable="d"
-        Title="Language School" Height="450" Width="800" MinWidth="800" MinHeight="450">
+        Title="Language School" Height="800" Width="1000" MinWidth="1000" MinHeight="800">
     <Grid>
-        <Frame x:Name="mainFrame"/>
+        <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

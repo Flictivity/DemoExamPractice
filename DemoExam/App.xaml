@@ -8,16 +8,16 @@
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Margin" Value="4"/>
-            <Setter Property="Foreground" Value="#04A0FF"/>
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Margin" Value="4"/>
-            <Setter Property="Foreground" Value="#04A0FF"/>
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#04A0FF"/>
             <Setter Property="Padding" Value="4"/>
         </Style>
     </Application.Resources>

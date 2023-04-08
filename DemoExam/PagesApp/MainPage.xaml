@@ -16,13 +16,17 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="6*"/>
+            <RowDefinition Height="8*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Frame x:Name="pageMainFrame" Grid.Row="1" Grid.Column="1"></Frame>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+        <Frame x:Name="pageMainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"></Frame>
+        <StackPanel Background="#E7FABF" Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center">
             <Image Source="/school_logo.png" Width="50" Height="50"/>
-            <Label Content="Языковая школа" VerticalAlignment="Center"/>
+            <Label Content="Языковая школа Леарн" VerticalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Назад" Height="45" Margin="0 0 10 0"/>
+            <Button Content="Далее" Height="45"/>
         </StackPanel>
     </Grid>
 </Page>

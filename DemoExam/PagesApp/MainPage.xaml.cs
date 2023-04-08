@@ -10,7 +10,7 @@ namespace DemoExam.PagesApp
         public MainPage()
         {
             InitializeComponent();
-            pageMainFrame.Navigate(new ServicePage());
+            pageMainFrame.Navigate(new ServicesPage());
         }
     }
 }

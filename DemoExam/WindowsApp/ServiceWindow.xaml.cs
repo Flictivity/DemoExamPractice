@@ -2,18 +2,17 @@
 using Microsoft.Win32;
 using System.Data.Entity.Migrations;
 using System.Windows;
-using System.Windows.Controls;
 
-namespace DemoExam.PagesApp
+namespace DemoExam.WindowsApp
 {
     /// <summary>
-    /// Interaction logic for ServicePage.xaml
+    /// Interaction logic for ServiceWindow.xaml
     /// </summary>
-    public partial class ServicePage : Page
+    public partial class ServiceWindow : Window
     {
         private Service _service;
         private bool _isEdit;
-        public ServicePage(Service service)
+        public ServiceWindow(Service service)
         {
             InitializeComponent();
             _service = service;
@@ -49,7 +48,7 @@ namespace DemoExam.PagesApp
             App.Connection.Service.AddOrUpdate(_service);
             App.Connection.SaveChanges();
             MessageBox.Show($"Успешно");
-            NavigationService.GoBack();
+            Close();
         }
 
         private void AddNewImageBtnClick(object sender, RoutedEventArgs e)
