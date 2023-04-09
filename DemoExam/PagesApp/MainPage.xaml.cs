@@ -12,5 +12,21 @@ namespace DemoExam.PagesApp
             InitializeComponent();
             pageMainFrame.Navigate(new ServicesPage());
         }
+
+        private void BackButtonClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
+        }
+
+        private void NextButtonClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoForward)
+            {
+                NavigationService.GoForward();
+            }
+        }
     }
 }

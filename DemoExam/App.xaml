@@ -9,6 +9,10 @@
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Margin" Value="4"/>
         </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
         <Style TargetType="TextBox">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontSize" Value="20"/>

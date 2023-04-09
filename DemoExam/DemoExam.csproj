@@ -68,15 +68,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ADOApp\Extensions\ServicePhoto.cs" />
+    <Compile Include="PagesApp\ClientServiceRegistrationPage.xaml.cs">
+      <DependentUpon>ClientServiceRegistrationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PagesApp\ServicePage.xaml.cs">
       <DependentUpon>ServicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowsApp\PasswordWindow.xaml.cs">
       <DependentUpon>PasswordWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowsApp\ServiceWindow.xaml.cs">
-      <DependentUpon>ServiceWindow.xaml</DependentUpon>
-    </Compile>
+    <Page Include="PagesApp\ClientServiceRegistrationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PagesApp\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,10 +163,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="WindowsApp\PasswordWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WindowsApp\ServiceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

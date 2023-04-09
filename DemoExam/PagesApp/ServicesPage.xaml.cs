@@ -116,26 +116,32 @@ namespace DemoExam.PagesApp
 
             if (res)
             {
-                MessageBox.Show("Удаление не возможно, так как существуют записи", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Удаление не возможно, так как существуют записи",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             else
             {
-                //var deleteService = App.Connection.Service.FirstOrDefault(x => x.ID == serviceId);
-                //if (deleteService == null)
-                //{
-                //    MessageBox.Show($"Не удалось найти услугус ID {serviceId}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
-                //}
-                //var clientServices = App.Connection.ClientService.Where(x => x.ServiceID == serviceId).ToList();
+                var deleteService = App.Connection.Service.FirstOrDefault(x => x.ID == serviceId);
+                if (deleteService == null)
+                {
+                    MessageBox.Show($"Не удалось найти услугус ID {serviceId}", "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                var clientServices = App.Connection.ClientService.Where(x => x.ServiceID == serviceId).ToList();
 
-                //foreach (var service in clientServices)
-                //{
-                //    App.Connection.ClientService.Remove(service);
-                //}
-                //App.Connection.Service.Remove(deleteService);
+                foreach (var service in clientServices)
+                {
+                    App.Connection.ClientService.Remove(service);
+                }
+                App.Connection.Service.Remove(deleteService);
 
-                //MessageBox.Show("Успешно", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
-                //return;
+                App.Connection.SaveChanges();
+
+                MessageBox.Show("Успешно", "Сообщение", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                UpdateServices();
+                return;
             }
         }
 
@@ -145,8 +151,6 @@ namespace DemoExam.PagesApp
             var editService = App.Connection.Service.FirstOrDefault(x => x.ID == serviceId);
 
             NavigationService.Navigate(new ServicePage(editService));
-            //var serviceWindow = new ServiceWindow(editService);
-            //serviceWindow.ShowDialog();
             UpdateServices();
         }
 
@@ -159,10 +163,8 @@ namespace DemoExam.PagesApp
 
         private void CreateNewServiceBtnClick(object sender, RoutedEventArgs e)
         {
-            var serviceWindow = new ServiceWindow(null);
+            var serviceWindow = new ServicePage(null);
             NavigationService.Navigate(new ServicePage(null));
-            //serviceWindow.ShowDialog();
-            //UpdateServices();
         }
 
         private void AdminModeBtnClick(object sender, RoutedEventArgs e)
@@ -186,6 +188,15 @@ namespace DemoExam.PagesApp
             btnNewService.Visibility = App.IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
 
             UpdateRecordsCount();
+        }
+
+        private void lvServices_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!App.IsAdministratorMode)
+            {
+                return;
+            }
+            NavigationService.Navigate(new ClientServiceRegistrationPage((Service)lvServices.SelectedItem));
         }
     }
 }

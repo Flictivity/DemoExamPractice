@@ -5,10 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DemoExam.PagesApp"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="650" d:DesignWidth="800"
       Title="MainPage">
 
-    <Grid Background="White">
+    <Grid Background="#E7FABF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10*"/>
@@ -20,13 +20,13 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Frame x:Name="pageMainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"></Frame>
-        <StackPanel Background="#E7FABF" Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center">
+        <StackPanel Margin="5 0 0 0" Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <Image Source="/school_logo.png" Width="50" Height="50"/>
             <Label Content="Языковая школа Леарн" VerticalAlignment="Center"/>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Назад" Height="45" Margin="0 0 10 0"/>
-            <Button Content="Далее" Height="45"/>
+        <StackPanel Margin="0 0 5 0" Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button Content="Назад" Height="45" Margin="0 0 10 0" Click="BackButtonClick"/>
+            <Button Content="Далее" Height="45" Click="NextButtonClick"/>
         </StackPanel>
     </Grid>
 </Page>

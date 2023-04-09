@@ -1,6 +1,7 @@
 ﻿using DemoExam.ADOApp;
 using Microsoft.Win32;
 using System.Data.Entity.Migrations;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -44,11 +45,44 @@ namespace DemoExam.PagesApp
             }
         }
 
-        private void AddNewServiceBtnClick(object sender, RoutedEventArgs e)
+        private void SaveBtnClick(object sender, RoutedEventArgs e)
         {
+            if (tbCost.Text == "" || tbDiscount.Text == "" || tbName.Text == ""
+                || tbDuration.Text == "" || _service.MainImagePath == "")
+            {
+                MessageBox.Show("Необходимо заполнить все поля", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            int duration = 0;
+            if (!int.TryParse(tbDuration.Text, out duration) || !int.TryParse(tbDiscount.Text, out int discount))
+            {
+                MessageBox.Show("Скидка и длительность должны быть целыми числами", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (duration / 3600 > 4)
+            {
+                MessageBox.Show("Длительность проведения услуги не может быть больше 4 часов", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!_isEdit)
+            {
+                var checkServiceExists = App.Connection.Service.Any(x => x.Title == _service.Title);
+                if (checkServiceExists)
+                {
+                    MessageBox.Show("Услуга с таким названием уже существует", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
             App.Connection.Service.AddOrUpdate(_service);
             App.Connection.SaveChanges();
-            MessageBox.Show($"Успешно");
+            MessageBox.Show("Успешно", "Сообщение", MessageBoxButton.OK,
+                MessageBoxImage.Information);
             NavigationService.GoBack();
         }
 
