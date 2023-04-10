@@ -67,7 +67,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ADOApp\Extensions\ClientService.cs" />
     <Compile Include="ADOApp\Extensions\ServicePhoto.cs" />
+    <Compile Include="PagesApp\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PagesApp\ClientServiceRegistrationPage.xaml.cs">
       <DependentUpon>ClientServiceRegistrationPage.xaml</DependentUpon>
     </Compile>
@@ -77,6 +81,10 @@
     <Compile Include="WindowsApp\PasswordWindow.xaml.cs">
       <DependentUpon>PasswordWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="PagesApp\AdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PagesApp\ClientServiceRegistrationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

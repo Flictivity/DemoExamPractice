@@ -38,7 +38,7 @@
                 <TextBlock Text="Поиск" VerticalAlignment="Center"/>
                 <TextBox x:Name="tbSearchBar" Width="200" VerticalContentAlignment="Center" Height="40" TextChanged="tbSearchBar_TextChanged"/>
             </StackPanel>
-            <Button Content="Войти как администратор" Click="AdminModeBtnClick"/>
+            <Button x:Name="btnAdminModeEnter" Content="Войти как администратор" Click="AdminModeBtnClick"/>
         </StackPanel>
         <ListView x:Name="lvServices" Grid.Row="1" SelectionChanged="lvServices_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=5}" HorizontalContentAlignment="Stretch">
             <ListView.ItemContainerStyle>
@@ -85,6 +85,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0">
             <TextBlock x:Name="tbRecordsCount" VerticalAlignment="Center"/>
             <Button x:Name="btnNewService" Content="Новая услуга" Click="CreateNewServiceBtnClick"/>
+            <Button x:Name="btnRegistrations" Content="Записи" Click="ShowRegistrationsBtnClick"/>
         </StackPanel>
     </Grid>
 </Page>

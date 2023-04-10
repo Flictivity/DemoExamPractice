@@ -12,7 +12,7 @@ namespace DemoExam.PagesApp
     public partial class ClientServiceRegistrationPage : Page
     {
         private Service _service = new Service();
-        private TimeSpan _duration;
+        private TimeSpan _startTime;
         public ClientServiceRegistrationPage(Service service)
         {
             InitializeComponent();
@@ -28,13 +28,29 @@ namespace DemoExam.PagesApp
             {
                 return;
             }
+            if (cbClients.SelectedItem == null)
+            {
+                return;
+            }
+            var startTimeDate = new DateTime(dpDate.SelectedDate.Value.Year, dpDate.SelectedDate.Value.Month, dpDate.SelectedDate.Value.Day);
+            var newRegistration = new ClientService
+            {
+                Client = (Client)cbClients.SelectedItem,
+                Service = _service,
+                StartTime = startTimeDate + _startTime,
+                Comment = tbComment.Text
+            };
 
-
+            App.Connection.ClientService.Add(newRegistration);
+            App.Connection.SaveChanges();
+            MessageBox.Show("Успешно", "Сообщение", MessageBoxButton.OK,
+                MessageBoxImage.Information);
+            NavigationService.GoBack();
         }
 
         private bool IsTimeCorrect()
         {
-            if (tbTimeStart.Text == "" || !TimeSpan.TryParse(tbTimeStart.Text, out _duration))
+            if (tbTimeStart.Text == "" || !TimeSpan.TryParse(tbTimeStart.Text, out _startTime))
             {
                 MessageBox.Show("Введено не корректное время", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
@@ -49,7 +65,7 @@ namespace DemoExam.PagesApp
             {
                 return;
             }
-            tbTimeEnd.Text = _duration.Add(TimeSpan.FromSeconds(_service.DurationInSeconds)).ToString(@"hh\:mm");
+            tbTimeEnd.Text = _startTime.Add(TimeSpan.FromSeconds(_service.DurationInSeconds)).ToString(@"hh\:mm");
         }
     }
 }

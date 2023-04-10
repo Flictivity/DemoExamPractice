@@ -169,9 +169,23 @@ namespace DemoExam.PagesApp
 
         private void AdminModeBtnClick(object sender, RoutedEventArgs e)
         {
+            if (btnAdminModeEnter.Content == "Выход")
+            {
+                App.IsAdministratorMode = false;
+                UpdateAdminComponents();
+                return;
+            }
+
             var window = new PasswordWindow();
             window.ShowDialog();
+            UpdateAdminComponents();
+        }
+
+        private void UpdateAdminComponents()
+        {
             btnNewService.Visibility = App.IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
+            btnRegistrations.Visibility = App.IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
+            btnAdminModeEnter.Content = App.IsAdministratorMode ? "Выход" : "Войти как администратор";
             UpdateServices();
         }
 
@@ -185,8 +199,7 @@ namespace DemoExam.PagesApp
             cbSorting.SelectedIndex = 0;
             cbFiltering.SelectedIndex = 0;
 
-            btnNewService.Visibility = App.IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
-
+            UpdateAdminComponents();
             UpdateRecordsCount();
         }
 
@@ -197,6 +210,11 @@ namespace DemoExam.PagesApp
                 return;
             }
             NavigationService.Navigate(new ClientServiceRegistrationPage((Service)lvServices.SelectedItem));
+        }
+
+        private void ShowRegistrationsBtnClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AdminPage());
         }
     }
 }
