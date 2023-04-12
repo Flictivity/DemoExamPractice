@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:DemoExam.PagesApp"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AdminPage">
+      Title="AdminPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -20,24 +20,34 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ListView Grid.Row="1" Grid.Column="1" x:Name="lvRecords" HorizontalContentAlignment="Stretch" d:ItemsSource="{d:SampleData ItemCount=5}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Background="{Binding TimeLeftBrush}">
-                        <TextBlock Text="{Binding Service.Title}"/>
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Client.FirstName}"/>
-                                <TextBlock Text="{Binding Client.LastName}"/>
-                                <TextBlock Text="{Binding Client.Patronymic}"/>
-                            </StackPanel>
-                            <TextBlock Text="{Binding Client.Email}"/>
-                            <TextBlock Text="{Binding Client.Phone}"/>
-                        </StackPanel>
-                        <TextBlock Text="{Binding StartTime}"/>
-                        <TextBlock Text="{Binding TimeLeftDisplay}" Visibility="{Binding ShowTime}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="{Binding TimeLeftBrush}"/>
+                    <Setter Property="Foreground" Value="{Binding Foreground}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Service.Title}">Название</GridViewColumn>
+                    <GridViewColumn Header="Клиент">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Client.FirstName}"/>
+                                        <TextBlock Text="{Binding Client.LastName}"/>
+                                        <TextBlock Text="{Binding Client.Patronymic}"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Client.Email}"/>
+                                    <TextBlock Text="{Binding Client.Phone}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding StartTime, StringFormat={}{0:dd'/'MM'/'yyy HH':'mm':'ss}}">Дата начала</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding TimeLeftDisplay}">Время до начала</GridViewColumn>
+                </GridView>
+            </ListView.View>
         </ListView>
     </Grid>
 </Page>

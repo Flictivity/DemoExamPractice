@@ -34,6 +34,114 @@ namespace DemoExam.PagesApp
             Search();
         }
 
+        private void cbFiltering_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FilterMethodChange();
+        }
+
+        private void DeleteButtonClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            int serviceId = (int)((Button)sender).Tag;
+
+            var res = App.Connection.ClientService.Any(x => x.ServiceID == serviceId);
+
+            if (res)
+            {
+                MessageBox.Show("Удаление не возможно, так как существуют записи",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else
+            {
+                var deleteService = App.Connection.Service.FirstOrDefault(x => x.ID == serviceId);
+                if (deleteService == null)
+                {
+                    MessageBox.Show($"Не удалось найти услугус ID {serviceId}", "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                var clientServices = App.Connection.ClientService.Where(x => x.ServiceID == serviceId).ToList();
+
+                //foreach (var service in clientServices)
+                //{
+                //    App.Connection.ClientService.Remove(service);
+                //}
+                //App.Connection.Service.Remove(deleteService);
+
+                //App.Connection.SaveChanges();
+
+                MessageBox.Show("Успешно", "Сообщение", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                UpdateServices();
+                return;
+            }
+        }
+
+        private void EditButtonClick(object sender, RoutedEventArgs e)
+        {
+            int serviceId = (int)((Button)sender).Tag;
+            var editService = App.Connection.Service.FirstOrDefault(x => x.ID == serviceId);
+
+            NavigationService.Navigate(new ServicePage(editService));
+            UpdateServices();
+        }
+
+        private void CreateNewServiceBtnClick(object sender, RoutedEventArgs e)
+        {
+            var serviceWindow = new ServicePage(null);
+            NavigationService.Navigate(new ServicePage(null));
+        }
+
+        private void AdminModeBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (btnAdminModeEnter.Content.ToString() == "Выход")
+            {
+                App.IsAdministratorMode = false;
+                UpdateAdminComponents();
+                return;
+            }
+
+            var window = new PasswordWindow();
+            window.ShowDialog();
+            UpdateAdminComponents();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            _services = App.Connection.Service.ToList();
+            lvServices.ItemsSource = _services;
+
+            cbSorting.ItemsSource = SortingMethods.Methods;
+            cbFiltering.ItemsSource = FilterMethods.Methods;
+            cbSorting.SelectedIndex = 0;
+            cbFiltering.SelectedIndex = 0;
+
+            UpdateAdminComponents();
+            UpdateRecordsCount();
+        }
+
+        private void lvServices_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!App.IsAdministratorMode)
+            {
+                return;
+            }
+            NavigationService.Navigate(new ClientServiceRegistrationPage((Service)lvServices.SelectedItem));
+        }
+
+        private void ShowRegistrationsBtnClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AdminPage());
+        }
+
+        private void UpdateAdminComponents()
+        {
+            btnNewService.Visibility = App.IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
+            btnRegistrations.Visibility = App.IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
+            btnAdminModeEnter.Content = App.IsAdministratorMode ? "Выход" : "Войти как администратор";
+            UpdateServices();
+        }
+
+
         private void FilterAndSort()
         {
             _sorted = _services.Where(x => _filterQuery(x)).OrderBy(x => _sortQuery(x)).ToList();
@@ -103,118 +211,11 @@ namespace DemoExam.PagesApp
             tbRecordsCount.Text = $"{lvServices.Items.Count} из {_services.Count()}";
         }
 
-        private void cbFiltering_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            FilterMethodChange();
-        }
-
-        private void DeleteButtonClick(object sender, System.Windows.RoutedEventArgs e)
-        {
-            int serviceId = (int)((Button)sender).Tag;
-
-            var res = App.Connection.ClientService.Any(x => x.ServiceID == serviceId);
-
-            if (res)
-            {
-                MessageBox.Show("Удаление не возможно, так как существуют записи",
-                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            else
-            {
-                var deleteService = App.Connection.Service.FirstOrDefault(x => x.ID == serviceId);
-                if (deleteService == null)
-                {
-                    MessageBox.Show($"Не удалось найти услугус ID {serviceId}", "Ошибка",
-                        MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                var clientServices = App.Connection.ClientService.Where(x => x.ServiceID == serviceId).ToList();
-
-                foreach (var service in clientServices)
-                {
-                    App.Connection.ClientService.Remove(service);
-                }
-                App.Connection.Service.Remove(deleteService);
-
-                App.Connection.SaveChanges();
-
-                MessageBox.Show("Успешно", "Сообщение", MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-                UpdateServices();
-                return;
-            }
-        }
-
-        private void EditButtonClick(object sender, RoutedEventArgs e)
-        {
-            int serviceId = (int)((Button)sender).Tag;
-            var editService = App.Connection.Service.FirstOrDefault(x => x.ID == serviceId);
-
-            NavigationService.Navigate(new ServicePage(editService));
-            UpdateServices();
-        }
-
         private void UpdateServices()
         {
             _services = App.Connection.Service.ToList();
             lvServices.ItemsSource = _services;
             FilterAndSort();
-        }
-
-        private void CreateNewServiceBtnClick(object sender, RoutedEventArgs e)
-        {
-            var serviceWindow = new ServicePage(null);
-            NavigationService.Navigate(new ServicePage(null));
-        }
-
-        private void AdminModeBtnClick(object sender, RoutedEventArgs e)
-        {
-            if (btnAdminModeEnter.Content == "Выход")
-            {
-                App.IsAdministratorMode = false;
-                UpdateAdminComponents();
-                return;
-            }
-
-            var window = new PasswordWindow();
-            window.ShowDialog();
-            UpdateAdminComponents();
-        }
-
-        private void UpdateAdminComponents()
-        {
-            btnNewService.Visibility = App.IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
-            btnRegistrations.Visibility = App.IsAdministratorMode ? Visibility.Visible : Visibility.Collapsed;
-            btnAdminModeEnter.Content = App.IsAdministratorMode ? "Выход" : "Войти как администратор";
-            UpdateServices();
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            _services = App.Connection.Service.ToList();
-            lvServices.ItemsSource = _services;
-
-            cbSorting.ItemsSource = SortingMethods.Methods;
-            cbFiltering.ItemsSource = FilterMethods.Methods;
-            cbSorting.SelectedIndex = 0;
-            cbFiltering.SelectedIndex = 0;
-
-            UpdateAdminComponents();
-            UpdateRecordsCount();
-        }
-
-        private void lvServices_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!App.IsAdministratorMode)
-            {
-                return;
-            }
-            NavigationService.Navigate(new ClientServiceRegistrationPage((Service)lvServices.SelectedItem));
-        }
-
-        private void ShowRegistrationsBtnClick(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new AdminPage());
         }
     }
 }

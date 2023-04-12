@@ -26,7 +26,6 @@
         </StackPanel>
         <StackPanel Margin="0 0 5 0" Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Center">
             <Button Content="Назад" Height="45" Margin="0 0 10 0" Click="BackButtonClick"/>
-            <Button Content="Далее" Height="45" Click="NextButtonClick"/>
         </StackPanel>
     </Grid>
 </Page>

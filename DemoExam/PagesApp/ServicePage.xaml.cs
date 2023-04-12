@@ -27,9 +27,6 @@ namespace DemoExam.PagesApp
                 _service = new Service();
             }
             this.DataContext = _service;
-
-            tblID.Visibility = _isEdit ? Visibility.Visible : Visibility.Collapsed;
-            tbID.Visibility = _isEdit ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void MainImageChangeButtonClick(object sender, RoutedEventArgs e)
@@ -93,6 +90,12 @@ namespace DemoExam.PagesApp
             {
                 MessageBox.Show($"Успешно{window.FileName}");
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            tblID.Visibility = _isEdit ? Visibility.Visible : Visibility.Collapsed;
+            tbID.Visibility = _isEdit ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

@@ -20,13 +20,5 @@ namespace DemoExam.PagesApp
                 NavigationService.GoBack();
             }
         }
-
-        private void NextButtonClick(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (NavigationService.CanGoForward)
-            {
-                NavigationService.GoForward();
-            }
-        }
     }
 }

@@ -19,7 +19,6 @@ namespace DemoExam.PagesApp
             _service = service;
 
             this.DataContext = _service;
-            cbClients.ItemsSource = App.Connection.Client.ToList();
         }
 
         private void SaveBtnClick(object sender, System.Windows.RoutedEventArgs e)
@@ -30,6 +29,14 @@ namespace DemoExam.PagesApp
             }
             if (cbClients.SelectedItem == null)
             {
+                MessageBox.Show("Необходимо выбрать клиента", "Ошибка",
+                   MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (dpDate.SelectedDate == null)
+            {
+                MessageBox.Show("Необходимо выбрать дату", "Ошибка",
+                   MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             var startTimeDate = new DateTime(dpDate.SelectedDate.Value.Year, dpDate.SelectedDate.Value.Month, dpDate.SelectedDate.Value.Day);
@@ -66,6 +73,11 @@ namespace DemoExam.PagesApp
                 return;
             }
             tbTimeEnd.Text = _startTime.Add(TimeSpan.FromSeconds(_service.DurationInSeconds)).ToString(@"hh\:mm");
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbClients.ItemsSource = App.Connection.Client.ToList();
         }
     }
 }

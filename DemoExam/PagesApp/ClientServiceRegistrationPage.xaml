@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:DemoExam.PagesApp"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ClientServiceRegistrationPage">
+      Title="ClientServiceRegistrationPage" Loaded="Page_Loaded">
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
