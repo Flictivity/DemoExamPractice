@@ -62,8 +62,8 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding PhotoByte}" Width="150" Height="150"/>
-                                    <Button Content="Удалить" VerticalAlignment="Center" Margin="10 0 0 0" Tag="{Binding ID}" Click="RemoveServiceImageBtnClick"/>
+                                    <Image Source="{Binding Path=PhotoByte}" Width="150" Height="150"/>
+                                    <Button Content="Удалить" VerticalAlignment="Center" Margin="10 0 0 0" Tag="{Binding PhotoByte}" Click="RemoveServiceImageBtnClick"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

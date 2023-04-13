@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DemoExam.ADOApp;
+﻿using DemoExam.ADOApp;
 using Microsoft.Win32;
 using System.Data.Entity.Migrations;
 using System.IO;
@@ -15,13 +14,11 @@ namespace DemoExam.PagesApp
     /// </summary>
     public partial class ServicePage : Page
     {
-        private List<ServicePhoto> _images;
         private Service _service;
         private bool _isEdit;
         public ServicePage(Service service)
         {
             InitializeComponent();
-            _images = new List<ServicePhoto>();
             _service = service;
             if (_service != null)
             {
@@ -41,10 +38,19 @@ namespace DemoExam.PagesApp
                 var bytePhoto = File.ReadAllBytes(window.FileName);
                 _service.PhotoByte = bytePhoto;
 
-                MessageBox.Show($"Успешно");
+                try
+                {
+                    imgMainImage.Source = ByteImageConverter.ByteToImage(_service.PhotoByte);
+                    MessageBox.Show("Успешно", "Сообщение", MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
+                catch
+                {
+                    MessageBox.Show("Произошла ошибка", "Ошибка", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                }
+                
             }
-
-            imgMainImage.Source = ByteImageConverter.ByteToImage(_service.PhotoByte);
         }
 
         private void SaveBtnClick(object sender, RoutedEventArgs e)
@@ -83,6 +89,7 @@ namespace DemoExam.PagesApp
                     return;
                 }
             }
+            
             App.Connection.Service.AddOrUpdate(_service);
             App.Connection.SaveChanges();
             MessageBox.Show("Успешно", "Сообщение", MessageBoxButton.OK,
@@ -97,9 +104,9 @@ namespace DemoExam.PagesApp
             {
                 var bytePhoto = File.ReadAllBytes(window.FileName);
 
-                _images.Add(new ServicePhoto{Service = _service, PhotoByte = bytePhoto});
-                lvImages.ItemsSource = _images;
-                MessageBox.Show($"Успешно");
+                _service.ServicePhoto.Add(new ServicePhoto{Service = _service, PhotoByte = bytePhoto, PhotoPath = "/"});
+                lvImages.ItemsSource = null;
+                lvImages.ItemsSource = _service.ServicePhoto.ToList();
             }
         }
 
@@ -108,10 +115,22 @@ namespace DemoExam.PagesApp
             DataContext = _service;
             tblID.Visibility = _isEdit ? Visibility.Visible : Visibility.Collapsed;
             tbID.Visibility = _isEdit ? Visibility.Visible : Visibility.Collapsed;
+            lvImages.ItemsSource = _service.ServicePhoto.ToList();
         }
 
         private void RemoveServiceImageBtnClick(object sender, RoutedEventArgs e)
         {
+            var tag = (byte[]) ((Button) sender).Tag;
+            var image = _service.ServicePhoto.FirstOrDefault(x => x.PhotoByte == tag);
+            _service.ServicePhoto.Remove(image);
+            lvImages.ItemsSource = null;
+            lvImages.ItemsSource = _service.ServicePhoto.ToList();
+            if (_isEdit)
+            {
+                var deleteImage = App.Connection.ServicePhoto.ToList().FirstOrDefault(x => x.ID == image?.ID);
+                if(deleteImage != null) App.Connection.ServicePhoto.Remove(deleteImage);
+                App.Connection.SaveChanges();
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace DemoExam.PagesApp
         {
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(30);
-            _timer.Tick += new EventHandler(TimerTick);
+            _timer.Tick += TimerTick;
             _timer.Start();
         }
 
@@ -30,13 +30,10 @@ namespace DemoExam.PagesApp
         }
         private void RefreshRecords()
         {
-            var addedDay = DateTime.Now.AddDays(1);
             lvRecords.ItemsSource = null;
             lvRecords.ItemsSource = App.Connection.ClientService
                 .ToList()
-                .Where(x => (x.StartTime.Date == DateTime.Now.Date
-                && x.StartTime.TimeOfDay > DateTime.Now.TimeOfDay) ||
-                (x.StartTime.Date == addedDay.Date)).OrderBy(x => x.StartTime).ToList();
+                .Where(x => x.StartTime >= DateTime.Now && x.StartTime < DateTime.Now.AddDays(2));
         }
 
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
