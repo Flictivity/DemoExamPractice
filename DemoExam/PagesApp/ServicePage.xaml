@@ -53,7 +53,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left">
                     <TextBlock Text="Главное изображение"/>
-                    <Image Source="{Binding ImagePath}" Width="150" Height="150" Margin="0 0 0 10"/>
+                    <Image x:Name="imgMainImage" Source="{Binding ImagePath, UpdateSourceTrigger=Explicit}" Width="150" Height="150" Margin="0 0 0 10"/>
                     <Button Content="Выбрать" Height="50" Click="MainImageChangeButtonClick"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
@@ -63,7 +63,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding ServicePhoto.ImagePath}" Width="150" Height="150"/>
-                                    <Button Content="Удалить" VerticalAlignment="Center" Margin="10 0 0 0" Click="AddNewImageBtnClick"/>
+                                    <Button Content="Удалить" VerticalAlignment="Center" Margin="10 0 0 0" Tag="{Binding ID}" Click="RemoveServiceImageBtnClick"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
