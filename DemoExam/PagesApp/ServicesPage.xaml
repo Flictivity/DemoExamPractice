@@ -55,7 +55,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="5*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Grid.Row="1" Source="{Binding Path=ImagePath}" Width="200" Height="200" Margin="0 0 10 8"/>
+                        <Image Grid.Column="0" Grid.Row="1" Source="{Binding Path=PhotoByte}" Width="200" Height="200" Margin="0 0 10 8"/>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
                             <TextBlock Text="{Binding Path=Title}"></TextBlock>
                             <StackPanel>

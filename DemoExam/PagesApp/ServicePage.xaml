@@ -53,22 +53,22 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left">
                     <TextBlock Text="Главное изображение"/>
-                    <Image x:Name="imgMainImage" Source="{Binding ImagePath, UpdateSourceTrigger=Explicit}" Width="150" Height="150" Margin="0 0 0 10"/>
+                    <Image x:Name="imgMainImage" Source="{Binding PhotoByte}" Width="150" Height="150" Margin="0 0 0 10"/>
                     <Button Content="Выбрать" Height="50" Click="MainImageChangeButtonClick"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
                     <TextBlock Text="Дополнительные изображения"/>
-                    <ListView HorizontalContentAlignment="Stretch">
+                    <ListView HorizontalContentAlignment="Stretch" Name="lvImages">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding ServicePhoto.ImagePath}" Width="150" Height="150"/>
+                                    <Image Source="{Binding PhotoByte}" Width="150" Height="150"/>
                                     <Button Content="Удалить" VerticalAlignment="Center" Margin="10 0 0 0" Tag="{Binding ID}" Click="RemoveServiceImageBtnClick"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Button Content="Добавить новое изображение"/>
+                    <Button Content="Добавить новое изображение" Click="AddNewImageBtnClick"/>
                 </StackPanel>
                 <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
                     <Button Content="Сохранить" Margin="0 0 10 0" Click="SaveBtnClick"/>

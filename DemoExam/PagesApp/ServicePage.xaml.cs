@@ -1,11 +1,12 @@
-﻿using DemoExam.ADOApp;
+﻿using System.Collections.Generic;
+using DemoExam.ADOApp;
 using Microsoft.Win32;
-using System;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using DemoExam.Components;
 
 namespace DemoExam.PagesApp
 {
@@ -14,11 +15,13 @@ namespace DemoExam.PagesApp
     /// </summary>
     public partial class ServicePage : Page
     {
+        private List<ServicePhoto> _images;
         private Service _service;
         private bool _isEdit;
         public ServicePage(Service service)
         {
             InitializeComponent();
+            _images = new List<ServicePhoto>();
             _service = service;
             if (_service != null)
             {
@@ -35,18 +38,13 @@ namespace DemoExam.PagesApp
             var window = new OpenFileDialog();
             if (window.ShowDialog() == true)
             {
-                string workingDirectory = Environment.CurrentDirectory;
-                string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-                var fileName = Path.GetFileName(window.FileName);
-                var newPath = projectDirectory + $@"\Услуги школы\{fileName}";
-
-                File.Copy(window.FileName, newPath, true);
-                _service.MainImagePath = $@"Услуги школы\{fileName}";
-
-                InvalidateVisual();
+                var bytePhoto = File.ReadAllBytes(window.FileName);
+                _service.PhotoByte = bytePhoto;
 
                 MessageBox.Show($"Успешно");
             }
+
+            imgMainImage.Source = ByteImageConverter.ByteToImage(_service.PhotoByte);
         }
 
         private void SaveBtnClick(object sender, RoutedEventArgs e)
@@ -59,9 +57,11 @@ namespace DemoExam.PagesApp
                 return;
             }
             int duration = 0;
-            if (!int.TryParse(tbDuration.Text, out duration) || !int.TryParse(tbDiscount.Text, out int discount))
+            if (!int.TryParse(tbDuration.Text, out duration)
+                || !double.TryParse(tbDiscount.Text, out double discount)
+                || !decimal.TryParse(tbCost.Text, out decimal cost))
             {
-                MessageBox.Show("Скидка и длительность должны быть целыми числами", "Ошибка",
+                MessageBox.Show("Скидка, длительность и стоимость должны быть целыми числами", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
@@ -95,24 +95,23 @@ namespace DemoExam.PagesApp
             var window = new OpenFileDialog();
             if (window.ShowDialog() == true)
             {
-                MessageBox.Show($"Успешно{window.FileName}");
-                //var newPath = Environment.CurrentDirectory + $@"\Услуги школы\\{Path.GetFileName(window.FileName)}";
+                var bytePhoto = File.ReadAllBytes(window.FileName);
 
-                //File.Copy(window.FileName, newPath);
-                //_service.MainImagePath = $@"Услуги школы\{Path.GetFileName(window.FileName)}";
+                _images.Add(new ServicePhoto{Service = _service, PhotoByte = bytePhoto});
+                lvImages.ItemsSource = _images;
+                MessageBox.Show($"Успешно");
             }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            this.DataContext = _service;
+            DataContext = _service;
             tblID.Visibility = _isEdit ? Visibility.Visible : Visibility.Collapsed;
             tbID.Visibility = _isEdit ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void RemoveServiceImageBtnClick(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }
