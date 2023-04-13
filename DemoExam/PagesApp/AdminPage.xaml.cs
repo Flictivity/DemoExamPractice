@@ -36,7 +36,7 @@ namespace DemoExam.PagesApp
                 .ToList()
                 .Where(x => (x.StartTime.Date == DateTime.Now.Date
                 && x.StartTime.TimeOfDay > DateTime.Now.TimeOfDay) ||
-                (x.StartTime.Date == addedDay.Date)).ToList();
+                (x.StartTime.Date == addedDay.Date)).OrderBy(x => x.StartTime).ToList();
         }
 
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
