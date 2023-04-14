@@ -53,17 +53,17 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left">
                     <TextBlock Text="Главное изображение"/>
-                    <Image x:Name="imgMainImage" Source="{Binding PhotoByte}" Width="150" Height="150" Margin="0 0 0 10"/>
+                    <Image x:Name="imgMainImage" Source="{Binding PhotoByte}" Width="200" Height="200" Margin="0 0 0 10"/>
                     <Button Content="Выбрать" Height="50" Click="MainImageChangeButtonClick"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
                     <TextBlock Text="Дополнительные изображения"/>
-                    <ListView HorizontalContentAlignment="Stretch" Name="lvImages">
+                    <ListView HorizontalContentAlignment="Stretch" Name="lvImages" MaxHeight="300">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Path=PhotoByte}" Width="150" Height="150"/>
-                                    <Button Content="Удалить" VerticalAlignment="Center" Margin="10 0 0 0" Tag="{Binding PhotoByte}" Click="RemoveServiceImageBtnClick"/>
+                                    <Button Content="Удалить" VerticalAlignment="Center" Margin="10 0 0 0" Tag="{Binding }" Click="RemoveServiceImageBtnClick"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

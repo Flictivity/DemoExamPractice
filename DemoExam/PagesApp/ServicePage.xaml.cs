@@ -108,6 +108,11 @@ namespace DemoExam.PagesApp
                 lvImages.ItemsSource = null;
                 lvImages.ItemsSource = _service.ServicePhoto.ToList();
             }
+            else
+            {
+                MessageBox.Show("Изображение не выбрано", "Сообщение", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -120,15 +125,14 @@ namespace DemoExam.PagesApp
 
         private void RemoveServiceImageBtnClick(object sender, RoutedEventArgs e)
         {
-            var tag = (byte[]) ((Button) sender).Tag;
-            var image = _service.ServicePhoto.FirstOrDefault(x => x.PhotoByte == tag);
-            _service.ServicePhoto.Remove(image);
+            var tag = (ServicePhoto)((Button)sender).Tag;
+            _service.ServicePhoto.Remove(tag);
             lvImages.ItemsSource = null;
             lvImages.ItemsSource = _service.ServicePhoto.ToList();
-            if (_isEdit)
+
+            if (tag.ID != 0)
             {
-                var deleteImage = App.Connection.ServicePhoto.ToList().FirstOrDefault(x => x.ID == image?.ID);
-                if(deleteImage != null) App.Connection.ServicePhoto.Remove(deleteImage);
+                App.Connection.ServicePhoto.Remove(tag);
                 App.Connection.SaveChanges();
             }
         }
