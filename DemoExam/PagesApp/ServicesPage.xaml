@@ -40,7 +40,7 @@
             </StackPanel>
             <Button x:Name="btnAdminModeEnter" Content="Войти как администратор" Click="AdminModeBtnClick"/>
         </StackPanel>
-        <ListView x:Name="lvServices" Grid.Row="1" SelectionChanged="lvServices_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=5}" HorizontalContentAlignment="Stretch">
+        <ListView x:Name="lvServices" ScrollViewer.CanContentScroll="False" Grid.Row="1" SelectionChanged="lvServices_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=5}" HorizontalContentAlignment="Stretch">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="BorderBrush" Value="Black"/>
@@ -60,8 +60,8 @@
                             <TextBlock Text="{Binding Path=Title}"></TextBlock>
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="0 0 5 0" TextDecorations="Strikethrough" Text="{Binding Path=Cost}" Visibility="{Binding Path=IsHaveDiscount}"></TextBlock>
-                                    <TextBlock>
+                                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" TextDecorations="Strikethrough" Text="{Binding Path=Cost}" Visibility="{Binding Path=IsHaveDiscount}"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0:F0} рублей за {1}">
                                                 <Binding Path="CostWithDiscount" />
@@ -71,7 +71,7 @@
                                     </TextBlock>
                                 </StackPanel>
 
-                                <TextBlock Text="{Binding Path=DiscountDisplay}"></TextBlock>
+                                <TextBlock Text="{Binding Path=DiscountDisplay}" VerticalAlignment="Center"></TextBlock>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="0 0 0 8">

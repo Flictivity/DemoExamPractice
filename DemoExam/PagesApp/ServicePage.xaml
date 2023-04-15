@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DemoExam.PagesApp"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="800" Loaded="Page_Loaded">
+      d:DesignHeight="750" d:DesignWidth="800" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -47,10 +47,6 @@
                     <TextBox x:Name="tbDescription" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Description}" SpellCheck.IsEnabled="True" Language="ru-ru"/>
                     <TextBox x:Name="tbDiscount" Text="{Binding Discount}" SpellCheck.IsEnabled="True" Language="ru-ru"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 0 10">
-                    <Image Source="/school_logo.png" Width="50" Height="50"/>
-                    <Label Content="Языковая школа Леарн" VerticalAlignment="Center"/>
-                </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left">
                     <TextBlock Text="Главное изображение"/>
                     <Image x:Name="imgMainImage" Source="{Binding PhotoByte}" Width="200" Height="200" Margin="0 0 0 10"/>
@@ -58,7 +54,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
                     <TextBlock Text="Дополнительные изображения"/>
-                    <ListView HorizontalContentAlignment="Stretch" Name="lvImages" MaxHeight="300">
+                    <ListView ScrollViewer.CanContentScroll="False" HorizontalContentAlignment="Stretch" Name="lvImages" MaxHeight="300" Height="300">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

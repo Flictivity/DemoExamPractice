@@ -1,11 +1,11 @@
 ﻿using DemoExam.ADOApp;
+using DemoExam.Components;
 using Microsoft.Win32;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using DemoExam.Components;
 
 namespace DemoExam.PagesApp
 {
@@ -49,7 +49,7 @@ namespace DemoExam.PagesApp
                     MessageBox.Show("Произошла ошибка", "Ошибка", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                 }
-                
+
             }
         }
 
@@ -89,7 +89,7 @@ namespace DemoExam.PagesApp
                     return;
                 }
             }
-            
+
             App.Connection.Service.AddOrUpdate(_service);
             App.Connection.SaveChanges();
             MessageBox.Show("Успешно", "Сообщение", MessageBoxButton.OK,
@@ -104,7 +104,7 @@ namespace DemoExam.PagesApp
             {
                 var bytePhoto = File.ReadAllBytes(window.FileName);
 
-                _service.ServicePhoto.Add(new ServicePhoto{Service = _service, PhotoByte = bytePhoto, PhotoPath = "/"});
+                _service.ServicePhoto.Add(new ServicePhoto { Service = _service, PhotoByte = bytePhoto, PhotoPath = "/" });
                 lvImages.ItemsSource = null;
                 lvImages.ItemsSource = _service.ServicePhoto.ToList();
             }
@@ -134,6 +134,14 @@ namespace DemoExam.PagesApp
             {
                 App.Connection.ServicePhoto.Remove(tag);
                 App.Connection.SaveChanges();
+            }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (_isEdit)
+            {
+                App.Connection.Entry(_service).Reload();
             }
         }
     }
